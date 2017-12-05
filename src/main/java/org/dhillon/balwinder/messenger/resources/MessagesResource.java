@@ -10,52 +10,61 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.dhillon.balwinder.messenger.model.Message;
 import org.dhillon.balwinder.messenger.service.MessageService;
 
-
 @Path("/messages")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MessagesResource {
-MessageService ms=new MessageService();
-	
-@GET 
+	MessageService ms = new MessageService();
 
-public List<Message> getMessages(){
+	@GET
+	public List<Message> getMessages(@QueryParam("year") int year
+			,@QueryParam("start") int start,
+			@QueryParam("size")int size) {
+		if(year>0){
+			return ms.getAllMessageForYear(year);
+		}
+		if(start >0 && size >0){
+			return ms.getAllMessagePaginated(start, size);
+		}
 		return ms.getAllMessages();
 	}
 
-@GET
-@Path("/{messageId}")
-@Produces(MediaType.APPLICATION_JSON)
-public Message getMessage(@PathParam("messageId") Long messageId){
-return	ms.getMessage(messageId);
-}
-
-@POST
-public Message addMessage(Message message){
 	
-	return ms.addMessage(message);
+	
+	
+	
+	
+	@GET
+	@Path("/{messageId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message getMessage(@PathParam("messageId") Long messageId) {
+		return ms.getMessage(messageId);
+	}
+
+	@POST
+	public Message addMessage(Message message) {
+
+		return ms.addMessage(message);
+	}
+
+	@PUT
+	@Path("/{messageId}")
+	public Message updateMessage(@PathParam("messageId") long messageId,
+			Message message) {
+		message.setId(messageId);
+		return ms.updateMessage(message);
+	}
+
+	@DELETE
+	@Path("/{messageId}")
+	public Message removeMessage(@PathParam("messageId") Long messageId) {
+		return ms.removeMessage(messageId);
+	}
+
 }
-
-@PUT
-@Path("/{messageId}")
-public Message updateMessage(@PathParam("messageId")long messageId,Message message){
-	message.setId(messageId);
-	return ms.updateMessage(message);
-}
-
-@DELETE
-@Path("/{messageId}")
-public Message removeMessage(@PathParam("messageId")Long messageId){
-	return ms.removeMessage(messageId);
-}
-
-
-}
-
-
-
