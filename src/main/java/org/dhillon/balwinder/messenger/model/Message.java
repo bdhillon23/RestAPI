@@ -1,15 +1,32 @@
 package org.dhillon.balwinder.messenger.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Message {
 	
+	private long id;
+	private String message;
+	private Date created;
+	private String author;
+	List<Links> links=new ArrayList<>();
+	
 	public Message(){
 		
 	}
+	public List<Links> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Links> links) {
+		this.links = links;
+	}
+	
+	
 	
 	public Message(long id,String message,String author){
 		this.id=id;
@@ -42,11 +59,13 @@ public class Message {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	private long id;
-	private String message;
-	private Date created;
-	private String author;
 	
+	public void addLink(String Url,String rel){
+		Links link=new Links();
+		link.setLink(Url);
+		link.setRel(rel);
+		links.add(link);
+	}
 	
 	
 }

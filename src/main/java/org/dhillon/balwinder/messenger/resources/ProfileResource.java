@@ -18,9 +18,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
 
 
-
-
-
 @Path("/profiles")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

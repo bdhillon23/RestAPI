@@ -18,4 +18,5 @@ public class InjectDemoResource {
 	public String getParamsUsingAnnotations(@MatrixParam("param") String matrixParam){
 		return "The Matrix param is :" +matrixParam;
 	}
+	
 }
